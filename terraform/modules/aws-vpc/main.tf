@@ -42,7 +42,6 @@ resource "aws_subnet" "public" {
   }
 }
 
-# No NAT gatweway, using freetier for now
 resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.private_subnet_cidr
@@ -75,7 +74,6 @@ resource "aws_route_table_association" "public" {
 
 data "aws_caller_identity" "current" {}
 
-# Log buckets cannot deliver access logs to themselves; flow logs are the audit source.
 #tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "flow_logs" {
   bucket = "${var.environment}-vpc-flow-logs-${data.aws_caller_identity.current.account_id}"
@@ -103,7 +101,6 @@ resource "aws_s3_bucket_versioning" "flow_logs" {
   }
 }
 
-# Cost control for this lab: SSE-S3 instead of a customer-managed KMS key (~$1/month); encryption at rest remains enabled.
 #tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket_server_side_encryption_configuration" "flow_logs" {
   bucket = aws_s3_bucket.flow_logs.id

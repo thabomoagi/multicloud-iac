@@ -1,6 +1,5 @@
 import boto3
 
-# Matches the Name tag that terraform/modules/vpc puts on the VPC.
 VPC_NAME = "dev-vpc"
 REGION = "af-south-1"
 
