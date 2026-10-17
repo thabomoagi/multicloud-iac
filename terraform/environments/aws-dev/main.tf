@@ -7,6 +7,14 @@ terraform {
       version = "~> 5.0"
     }
   }
+
+  backend "s3" {
+    bucket         = "multicloud-iac-terraform-state-af-south-1"
+    key            = "dev/vpc/terraform.tfstate"
+    region         = "af-south-1"
+    dynamodb_table = "multicloud-iac-state-locks"
+    encrypt        = true
+  }
 }
 
 provider "aws" {
@@ -14,7 +22,7 @@ provider "aws" {
 }
 
 module "development_network" {
-  source = "../../modules/vpc"
+  source = "../../modules/aws-vpc"
 
   environment         = var.environment
   vpc_cidr            = var.vpc_cidr

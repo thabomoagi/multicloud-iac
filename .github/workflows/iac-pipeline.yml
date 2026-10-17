@@ -1,23 +1,24 @@
-name: Terraform Validation
+name: Terraform CI/CD & Governance
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    - cron: '0 6 * * *' # Nightly drift detection at 6:00 UTC
 
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_DEFAULT_REGION: af-south-1
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
-  terraform:
-    name: Terraform Format, Validate & Plan
+  terraform-security-and-plan:
+    name: Lint, Scan, Validate & Plan
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: terraform/environments/dev
+        working-directory: terraform/environments/aws-dev
 
     steps:
       - name: Checkout code
@@ -28,14 +29,82 @@ jobs:
         with:
           terraform_version: 1.9.0
 
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: v0.50.0
+
+      - name: Run TFLint
+        working-directory: terraform
+        run: tflint --recursive
+
+      - name: Run TFSec Security Scan
+        uses: tfsec/tfsec-action@v1
+        with:
+          working_directory: terraform
+
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: af-south-1
+
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend=false # Initialize without backend required for CI validation / plan checks
 
       - name: Terraform Validate
         run: terraform validate
 
       - name: Terraform Plan
         run: terraform plan
+
+  drift-detection:
+    name: Nightly Drift Detection
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform/environments/aws-dev
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.0
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: af-south-1
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Drift Check
+        run: terraform plan -detailed-exitcode
+
+  tests:
+    name: Verification Script Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest -q
