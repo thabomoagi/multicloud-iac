@@ -43,6 +43,7 @@ jobs:
         with:
           working_directory: terraform
           version: v1.28.14
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
