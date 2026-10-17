@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 1.5.0"
+  required_version = ">= 1.10.0"
 
   required_providers {
     aws = {
@@ -9,11 +9,11 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "multicloud-iac-terraform-state-af-south-1"
-    key            = "dev/vpc/terraform.tfstate"
-    region         = "af-south-1"
-    dynamodb_table = "multicloud-iac-state-locks"
-    encrypt        = true
+    bucket       = "multicloud-iac-terraform-state-af-south-1"
+    key          = "dev/vpc/terraform.tfstate"
+    region       = "af-south-1"
+    use_lockfile = true
+    encrypt      = true
   }
 }
 
