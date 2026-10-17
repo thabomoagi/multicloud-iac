@@ -29,3 +29,12 @@ module "development_vnet" {
   public_subnet_cidr  = var.public_subnet_cidr
   private_subnet_cidr = var.private_subnet_cidr
 }
+
+module "development_vm" {
+  source = "../../modules/azure-vm"
+
+  environment         = var.environment
+  location            = var.azure_region
+  resource_group_name = module.development_vnet.resource_group_name
+  subnet_id           = module.development_vnet.public_subnet_id
+}

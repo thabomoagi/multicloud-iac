@@ -14,9 +14,9 @@ Built as a comprehensive reference implementation for Platform Engineering, Clou
 | :--- | :--- | :--- | :--- |
 | **Stage 0** | Foundation & Architecture | **[DONE]** | Multi-cloud directory structure, Terraform AWS VPC module (Deployed), verification scripts, CI validation |
 | **Stage 1** | Security & GitOps Pipelines | **[DONE]** | OIDC authentication, `tflint`, `tfsec`, drift detection, remote state backend |
-| **Stage 2** | Multi-Cloud Expansion (Azure) | **[IN PROGRESS]** | Azure VNet Terraform module and dev environment (Validated via terraform validate) |
-| **Stage 3** | Configuration Management (Ansible) | **[PLANNED]** | OS hardening, patching, idempotency playbooks for Windows/Linux estates |
-| **Stage 4** | Infrastructure Marketplace / IDP | **[PLANNED]** | FastAPI self-service portal, catalog definitions, golden paths scaffolding |
+| **Stage 2** | Multi-Cloud Expansion (Azure) | **[DONE]** | Azure VNet & VM Terraform modules and dev environment |
+| **Stage 3** | Configuration Management (Ansible) | **[DONE]** | OS hardening roles, inventory, and site playbooks |
+| **Stage 4** | Infrastructure Marketplace / IDP | **[DONE]** | FastAPI self-service portal, catalog definitions, and provision endpoints |
 
 ---
 
@@ -37,9 +37,18 @@ multicloud-iac/
 │   │   └── azure-dev/
 │   └── modules/
 │       ├── aws-vpc/
-│       └── azure-vnet/
+│       ├── azure-vnet/
+│       └── azure-vm/
 ├── ansible/
+│   ├── ansible.cfg
+│   ├── inventory/
+│   ├── playbooks/
+│   └── roles/
 ├── idp-portal/
+│   ├── requirements.txt
+│   └── app/
+│       ├── main.py
+│       └── catalog.json
 ├── tests/
 │   └── test_verify_deployment.py
 ├── AGENTS.md

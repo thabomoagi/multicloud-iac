@@ -1,0 +1,16 @@
+[
+  {
+    "id": "aws-vpc-secure",
+    "name": "Secure AWS VPC Golden Path",
+    "cloud": "aws",
+    "description": "Production-ready VPC with public and private subnets, internet gateway, route tables, and S3 flow logs.",
+    "version": "1.0.0"
+  },
+  {
+    "id": "azure-vnet-secure",
+    "name": "Secure Azure VNet and VM Golden Path",
+    "cloud": "azure",
+    "description": "Enterprise Azure Virtual Network with subnets, NSGs, and Linux Virtual Machine provisioning.",
+    "version": "1.0.0"
+  }
+]

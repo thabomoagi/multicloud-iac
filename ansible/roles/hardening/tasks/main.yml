@@ -1,0 +1,29 @@
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_os_family == "Debian"
+
+- name: Install security updates and essential packages
+  apt:
+    name:
+      - ufw
+      - curl
+      - git
+      - fail2ban
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Configure UFW firewall default policies
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
+  when: ansible_os_family == "Debian"
+
+- name: Allow SSH through UFW
+  ufw:
+    rule: allow
+    port: '22'
+    proto: tcp
+  when: ansible_os_family == "Debian"
