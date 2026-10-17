@@ -1,6 +1,8 @@
-# Multi-Cloud Infrastructure Automation Lab & IDP Platform
+# Multicloud Infrastructure Automation and Platform Engineering Lab
 
-A well-built infrastructure automation lab with production-style practices for multi-cloud infrastructure automation, Terraform modules, Ansible configuration management, secure CI/CD pipelines, and Internal Developer Platform (IDP) golden paths across **AWS** and **Azure**.
+Production-grade infrastructure automation lab featuring Terraform modular architectures, GitHub Actions CI/CD pipelines with OIDC authentication, policy-as-code, and developer self-service golden paths across AWS (deployed) and Azure (validated).
+
+Clone URL: https://github.com/thabomoagi/multicloud-iac.git
 
 Built as a comprehensive reference implementation for Platform Engineering, Cloud Engineering, and Infrastructure Automation roles.
 
@@ -10,9 +12,9 @@ Built as a comprehensive reference implementation for Platform Engineering, Clou
 
 | Stage | Focus Area | Status | Key Deliverables |
 | :--- | :--- | :--- | :--- |
-| **Stage 0** | Foundation & Architecture | **[DONE]** | Multi-cloud directory structure, Terraform AWS VPC module, verification scripts, CI validation |
-| **Stage 1** | Security & GitOps Pipelines | **[IN PROGRESS]** | OIDC authentication, `tflint`, `tfsec`/`checkov`, drift detection, remote state backend |
-| **Stage 2** | Multi-Cloud Expansion (Azure) | **[IN PROGRESS]** | Azure VNet Terraform module and dev environment |
+| **Stage 0** | Foundation & Architecture | **[DONE]** | Multi-cloud directory structure, Terraform AWS VPC module (Deployed), verification scripts, CI validation |
+| **Stage 1** | Security & GitOps Pipelines | **[DONE]** | OIDC authentication, `tflint`, `tfsec`, drift detection, remote state backend |
+| **Stage 2** | Multi-Cloud Expansion (Azure) | **[IN PROGRESS]** | Azure VNet Terraform module and dev environment (Validated via terraform validate) |
 | **Stage 3** | Configuration Management (Ansible) | **[PLANNED]** | OS hardening, patching, idempotency playbooks for Windows/Linux estates |
 | **Stage 4** | Infrastructure Marketplace / IDP | **[PLANNED]** | FastAPI self-service portal, catalog definitions, golden paths scaffolding |
 
@@ -59,10 +61,10 @@ multicloud-iac/
 
 ## Repository Settings Recommendation
 
-### Proposed Repository Description
-> Multi-Cloud Infrastructure Automation Lab (AWS, Azure) featuring Terraform modules, Ansible config, GitHub Actions CI/CD, security scanning, policy-as-code, and IDP/Marketplace golden paths.
+### Repository Description
+Multi-Cloud Infrastructure Automation Lab (AWS deployed, Azure validated) featuring Terraform modules, Ansible config, GitHub Actions CI/CD, security scanning, policy-as-code, and IDP/Marketplace golden paths.
 
-### Proposed Repository Topics
+### Repository Topics
 `terraform` `ansible` `aws` `azure` `infrastructure-as-code` `devops` `platform-engineering` `ci-cd` `github-actions` `finops` `idp`
 
 ---
@@ -107,7 +109,13 @@ multicloud-iac/
 
 To enable automated Terraform execution and planning in GitHub Actions:
 
-1. Configure an AWS IAM OIDC identity provider for GitHub (`token.actions.githubusercontent.com`).
-2. Create an IAM role with permissions for Terraform deployment and establish a trust policy restricting access to this repository.
-3. Add the resulting IAM Role ARN as a repository secret named `AWS_ROLE_ARN` under repository settings (Settings > Secrets and variables > Actions).
-4. If `AWS_ROLE_ARN` is not set, linting, formatting, static security scans, and validation still execute successfully in CI, while Terraform plans run automatically once the secret is configured.
+1. Configure AWS IAM OIDC provider for GitHub Actions (`token.actions.githubusercontent.com`).
+2. Create an IAM role restricting assume-role trust policy to this GitHub repository.
+3. Configure the `AWS_ROLE_ARN` secret in GitHub repository settings under Actions secrets.
+4. OIDC authentication issues short-lived session tokens during CI runs, eliminating long-lived AWS static credentials.
+
+## AI Assistant Usage and Approval Governance
+
+1. AI assistants are utilized strictly under human-in-the-loop governance.
+2. All file modifications, pipeline changes, and infrastructure code generation require explicit human review and approval before execution or commit.
+3. Automated pre-flight checks and tests must pass prior to merging any changes into the main branch.
