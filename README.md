@@ -1,6 +1,6 @@
 # Multi-Cloud Infrastructure Automation Lab & IDP Platform
 
-A well-built infrastructure automation lab with production-style practices for multi-cloud infrastructure automation, Terraform modules, Ansible configuration management, secure CI/CD pipelines, and Internal Developer Platform (IDP) golden paths across **AWS**, **Azure**, and **Hetzner (on-premise / bare-metal emulation)**.
+A well-built infrastructure automation lab with production-style practices for multi-cloud infrastructure automation, Terraform modules, Ansible configuration management, secure CI/CD pipelines, and Internal Developer Platform (IDP) golden paths across **AWS** and **Azure**.
 
 Built as a comprehensive reference implementation for Platform Engineering, Cloud Engineering, and Infrastructure Automation roles.
 
@@ -12,7 +12,7 @@ Built as a comprehensive reference implementation for Platform Engineering, Clou
 | :--- | :--- | :--- | :--- |
 | **Stage 0** | Foundation & Architecture | **[DONE]** | Multi-cloud directory structure, Terraform AWS VPC module, verification scripts, CI validation |
 | **Stage 1** | Security & GitOps Pipelines | **[IN PROGRESS]** | OIDC authentication, `tflint`, `tfsec`/`checkov`, drift detection, remote state backend |
-| **Stage 2** | Multi-Cloud Expansion (Azure & Hetzner) | **[PLANNED]** | Azure VNet & VM Terraform modules, Hetzner cloud server automation |
+| **Stage 2** | Multi-Cloud Expansion (Azure) | **[IN PROGRESS]** | Azure VNet Terraform module and dev environment |
 | **Stage 3** | Configuration Management (Ansible) | **[PLANNED]** | OS hardening, patching, idempotency playbooks for Windows/Linux estates |
 | **Stage 4** | Infrastructure Marketplace / IDP | **[PLANNED]** | FastAPI self-service portal, catalog definitions, golden paths scaffolding |
 
@@ -31,11 +31,11 @@ multicloud-iac/
 │   └── verify_deployment.py
 ├── terraform/
 │   ├── environments/
-│   │   └── aws-dev/
+│   │   ├── aws-dev/
+│   │   └── azure-dev/
 │   └── modules/
 │       ├── aws-vpc/
-│       ├── azure-vnet/
-│       └── hetzner-server/
+│       └── azure-vnet/
 ├── ansible/
 ├── idp-portal/
 ├── tests/
@@ -60,10 +60,10 @@ multicloud-iac/
 ## Repository Settings Recommendation
 
 ### Proposed Repository Description
-> Multi-Cloud Infrastructure Automation Lab (AWS, Azure, Hetzner) featuring Terraform modules, Ansible config, GitHub Actions CI/CD, security scanning, policy-as-code, and IDP/Marketplace golden paths.
+> Multi-Cloud Infrastructure Automation Lab (AWS, Azure) featuring Terraform modules, Ansible config, GitHub Actions CI/CD, security scanning, policy-as-code, and IDP/Marketplace golden paths.
 
 ### Proposed Repository Topics
-`terraform` `ansible` `aws` `azure` `hetzner` `infrastructure-as-code` `devops` `platform-engineering` `ci-cd` `github-actions` `finops` `idp`
+`terraform` `ansible` `aws` `azure` `infrastructure-as-code` `devops` `platform-engineering` `ci-cd` `github-actions` `finops` `idp`
 
 ---
 

@@ -61,6 +61,14 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
+      - name: Terraform Azure Init
+        run: terraform init -backend=false
+        working-directory: terraform/environments/azure-dev
+
+      - name: Terraform Azure Validate
+        run: terraform validate
+        working-directory: terraform/environments/azure-dev
+
       - name: Terraform Plan
         if: ${{ secrets.AWS_ROLE_ARN != '' }}
         run: terraform plan
