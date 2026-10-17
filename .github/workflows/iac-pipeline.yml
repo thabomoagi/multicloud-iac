@@ -91,3 +91,22 @@ jobs:
 
       - name: Terraform Drift Check
         run: terraform plan -detailed-exitcode
+
+  tests:
+    name: Verification Script Tests
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest -q

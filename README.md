@@ -38,7 +38,10 @@ multicloud-iac/
 │       └── hetzner-server/
 ├── ansible/
 ├── idp-portal/
+├── tests/
+│   └── test_verify_deployment.py
 ├── AGENTS.md
+├── pytest.ini
 ├── requirements.txt
 └── README.md
 ```
@@ -49,7 +52,7 @@ multicloud-iac/
 
 - **Automation-First**: Eliminating manual configuration drift through reusable IaC and CI/CD.
 - **Secure by Design**: Least privilege IAM, policy-as-code, secrets management, and automated security linting (`tfsec`).
-- **Quality Built-In**: Automated formatting (`terraform fmt`), linting (`tflint`), and static analysis.
+- **Quality Built-In**: Automated formatting (`terraform fmt`), linting (`tflint`), static analysis, and unit testing (`pytest` with `moto`).
 - **Platform as a Product**: Designed for developer self-service via standardized Golden Paths and modular architecture.
 
 ---
@@ -93,4 +96,9 @@ multicloud-iac/
    venv\Scripts\activate
    pip install -r requirements.txt
    python scripts/verify_deployment.py
+   ```
+
+6. **Run Tests**
+   ```bash
+   pytest
    ```

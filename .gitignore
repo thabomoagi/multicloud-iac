@@ -15,5 +15,6 @@ Thumbs.db
 venv/
 __pycache__/
 *.py[cod]
+.pytest_cache/
 INTERVIEW_NOTES.md
 BROKE_AND_FIXED.md
