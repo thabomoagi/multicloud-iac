@@ -15,7 +15,7 @@ permissions:
 jobs:
   terraform-security-and-plan:
     name: Lint, Scan, Validate & Plan
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: terraform/environments/aws-dev
@@ -39,9 +39,10 @@ jobs:
         run: tflint --recursive
 
       - name: Run TFSec Security Scan
-        uses: tfsec/tfsec-action@v1
+        uses: aquasecurity/tfsec-action@v1.0.3
         with:
           working_directory: terraform
+          version: v1.28.14
 
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
@@ -64,7 +65,7 @@ jobs:
   drift-detection:
     name: Nightly Drift Detection
     if: github.event_name == 'schedule'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: terraform/environments/aws-dev
@@ -92,7 +93,7 @@ jobs:
 
   tests:
     name: Verification Script Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
