@@ -102,3 +102,12 @@ multicloud-iac/
    ```bash
    pytest
    ```
+
+## CI/CD and AWS OIDC Setup
+
+To enable automated Terraform execution and planning in GitHub Actions:
+
+1. Configure an AWS IAM OIDC identity provider for GitHub (`token.actions.githubusercontent.com`).
+2. Create an IAM role with permissions for Terraform deployment and establish a trust policy restricting access to this repository.
+3. Add the resulting IAM Role ARN as a repository secret named `AWS_ROLE_ARN` under repository settings (Settings > Secrets and variables > Actions).
+4. If `AWS_ROLE_ARN` is not set, linting, formatting, static security scans, and validation still execute successfully in CI, while Terraform plans run automatically once the secret is configured.
