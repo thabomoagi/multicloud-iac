@@ -9,3 +9,4 @@
 - [NO MOCKS]: No stubs or placeholder modules unless explicitly noted. Fully testable code.
 - [STYLE]: Never use emojis or code comments. Keep all code and documentation free of emojis and explanatory comments; only functional directives (e.g., `#tfsec:ignore:...`) are allowed.
 - [WORKFLOW]: One stage at a time, explain blocks, run fmt/validate/lint/scan/tests, show output.
+- [MEMORY]: At the start of every session, read AGENTS.md and SESSION_STATE.md, summarize where we are in 5 lines, and ask what to continue. After every step, update SESSION_STATE.md.
